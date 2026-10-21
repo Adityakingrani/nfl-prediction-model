@@ -28,6 +28,14 @@ warnings.filterwarnings("ignore")
 DB_PATH = "data/nfl.duckdb"
 OUT_DIR = "predictions"
 MARGIN_CAP = 28
+TEAM_NAMES = {
+    "ARI": "Cardinals", "ATL": "Falcons", "BAL": "Ravens", "BUF": "Bills", "CAR": "Panthers", "CHI": "Bears",
+    "CIN": "Bengals", "CLE": "Browns", "DAL": "Cowboys", "DEN": "Broncos", "DET": "Lions", "GB": "Packers",
+    "HOU": "Texans", "IND": "Colts", "JAX": "Jaguars", "KC": "Chiefs", "LA": "Rams", "LAC": "Chargers",
+    "LV": "Raiders", "MIA": "Dolphins", "MIN": "Vikings", "NE": "Patriots", "NO": "Saints", "NYG": "Giants",
+    "NYJ": "Jets", "PHI": "Eagles", "PIT": "Steelers", "SEA": "Seahawks", "SF": "49ers", "TB": "Buccaneers",
+    "TEN": "Titans", "WAS": "Commanders",
+}
 FEATURES = ["in_margin_w", "in_epa_edge_w", "in_sr_edge_w", "pr_margin_w", "pr_epa_edge_w",
             "home_field", "rest_diff", "qb_edge", "qb_change"]
 
@@ -90,6 +98,8 @@ def main():
 
     model, sigma = train_model(f[f["completed"] & (f["season"] >= 2010)])
     g = wk.copy()
+    for col in ("home_team", "away_team"):
+        g[col] = g[col].map(TEAM_NAMES).fillna(g[col])
     g["pred_margin"] = model.predict(g[FEATURES])
     g["home_prob"] = norm.cdf(g["pred_margin"] / sigma)
     g["pick"] = np.where(g["pred_margin"] >= 0, g["home_team"], g["away_team"])
@@ -104,19 +114,19 @@ def main():
 
     mr, mn, kr, kn = season_record(f, season)
     now = datetime.now().strftime("%a %b %d, %I:%M %p")
-    W = 112
+    W = 132
     print("\n" + "=" * W)
     print(f" NFL PREDICTIONS - {season} WEEK {week}          generated {now}")
     if mn:
         print(f" Model record this season: {mr}-{mn - mr} ({mr / mn:.1%}) | Market favorite: {kr}-{kn - kr} ({kr / kn:.1%})")
     print("=" * W)
-    print(f" {'KICKOFF':<15}{'MATCHUP':<12}{'QBs (away / home)':<36}{'PICK':<6}{'WIN %':>6}{'MARGIN':>8}{'MARKET':>8}  CONF")
+    print(f" {'KICKOFF':<15}{'MATCHUP':<26}{'QBs (away / home)':<36}{'PICK':<12}{'WIN %':>6}{'MARGIN':>8}{'MARKET':>8}  CONF")
     for _, r in g.iterrows():
         kick = r["kickoff"].strftime("%a %I:%M %p") if pd.notna(r["kickoff"]) else "TBD"
         qbs = f"{r['away_qb_name'] or '?'} / {r['home_qb_name'] or '?'}"[:34]
         mkt = f"{r['market_spread']:+.1f}" if pd.notna(r["market_spread"]) else "--"
         tags = ("  !" if r["flag"] else "") + (f"  [{r['qb_note']}]" if r["qb_note"] else "")
-        print(f" {kick:<15}{r['matchup']:<12}{qbs:<36}{r['pick']:<6}{r['win_pct']:>6.0%}{r['pick_margin']:>+8.1f}{mkt:>8}  {r['conf']:<4}{tags}")
+        print(f" {kick:<15}{r['matchup']:<26}{qbs:<36}{r['pick']:<12}{r['win_pct']:>6.0%}{r['pick_margin']:>+8.1f}{mkt:>8}  {r['conf']:<4}{tags}")
     print("-" * W)
     c = g["conf"].value_counts()
     print(f" {len(g)} games | HIGH: {c.get('HIGH', 0)} | MEDIUM: {c.get('MED', 0)} | LOW: {c.get('LOW', 0)}")
