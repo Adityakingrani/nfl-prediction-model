@@ -1,0 +1,15 @@
+kickoff,away,home,away_qb_name,home_qb_name,pick,win_pct,pick_margin,market_spread,conf,disagrees_with_market,qb_note,game_id,neutral
+2026-10-22 08:15 PM,NE,CHI,Drake Maye,Caleb Williams,NE,51.6,0.5,-3.0,LOW,True,,2026_07_NE_CHI,False
+2026-10-25 09:30 AM,PIT,NO,Aaron Rodgers,Tyler Shough,PIT,57.6,2.5,3.5,LOW,False,,2026_07_PIT_NO,True
+2026-10-25 01:00 PM,CIN,BAL,Joe Burrow,Tyler Huntley,CIN,54.1,1.4,1.5,LOW,False,,2026_07_CIN_BAL,False
+2026-10-25 01:00 PM,CLE,TEN,Deshaun Watson,Cam Ward,CLE,58.5,2.8,1.5,MED,False,,2026_07_CLE_TEN,False
+2026-10-25 01:00 PM,IND,MIN,Daniel Jones,Kyler Murray,MIN,71.6,7.5,-6.5,HIGH,False,,2026_07_IND_MIN,False
+2026-10-25 01:00 PM,MIA,NYJ,Malik Willis,Geno Smith,NYJ,57.5,2.5,-4.5,LOW,False,,2026_07_MIA_NYJ,False
+2026-10-25 01:00 PM,NYG,HOU,J.J. McCarthy,C.J. Stroud,HOU,75.7,9.2,-10.5,HIGH,False,QB change,2026_07_NYG_HOU,False
+2026-10-25 01:00 PM,SF,ATL,Brock Purdy,Michael Penix Jr.,SF,62.9,4.4,3.0,MED,False,,2026_07_SF_ATL,False
+2026-10-25 01:00 PM,TB,CAR,Jalon Daniels,Bryce Young,CAR,67.0,5.8,-3.0,MED,False,,2026_07_TB_CAR,False
+2026-10-25 04:05 PM,DEN,ARI,Bo Nix,Jacoby Brissett,DEN,63.5,4.6,4.5,MED,False,,2026_07_DEN_ARI,False
+2026-10-25 04:25 PM,GB,DET,Jordan Love,Jared Goff,DET,63.5,4.5,-3.0,MED,False,,2026_07_GB_DET,False
+2026-10-25 04:25 PM,LA,LV,Matthew Stafford,Kirk Cousins,LA,58.0,2.6,4.5,LOW,False,,2026_07_LA_LV,False
+2026-10-25 08:20 PM,KC,SEA,Patrick Mahomes,Drew Lock,KC,50.8,0.3,-2.5,LOW,True,,2026_07_KC_SEA,False
+2026-10-26 08:15 PM,DAL,PHI,Dak Prescott,Jalen Hurts,PHI,58.3,2.7,4.5,MED,True,QB change,2026_07_DAL_PHI,False

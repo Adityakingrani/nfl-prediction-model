@@ -1,0 +1,10 @@
+nflreadpy
+polars
+pandas
+numpy
+scipy
+scikit-learn
+lightgbm
+duckdb
+pyarrow
+streamlit
