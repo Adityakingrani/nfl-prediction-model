@@ -143,7 +143,19 @@ def main():
     out["win_pct"] = (out["win_pct"] * 100).round(1)
     out["pick_margin"] = out["pick_margin"].round(1)
     out["neutral"] = out.pop("home_field") == 0
-    out.rename(columns={"away_team": "away", "home_team": "home", "flag": "disagrees_with_market"}).to_csv(path, index=False)
+    out = out.rename(columns={"away_team": "away", "home_team": "home", "flag": "disagrees_with_market"})
+    # keep the original pre-game predictions for games that have already been played this week,
+    # so a mid-week rerun never erases Thursday's pick (needed for grading)
+    if os.path.exists(path):
+        old = pd.read_csv(path)
+        kept = old[~old["game_id"].isin(out["game_id"])]
+        if len(kept):
+            print(f"Kept {len(kept)} earlier prediction(s) for games already played: "
+                  + ", ".join(kept["away"] + " @ " + kept["home"]))
+            out = pd.concat([kept, out], ignore_index=True)
+            out["_k"] = pd.to_datetime(out["kickoff"], format="%Y-%m-%d %I:%M %p", errors="coerce")
+            out = out.sort_values("_k").drop(columns="_k")
+    out.to_csv(path, index=False)
     with open(path.replace(".csv", ".json"), "w") as fh:
         json.dump({"season": int(season), "label": f"Week {week}", "generated": now, "model_right": mr,
                    "model_games": mn, "market_right": kr, "market_games": kn}, fh)

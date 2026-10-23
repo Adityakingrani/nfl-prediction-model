@@ -1,15 +1,15 @@
 kickoff,away,home,away_qb_name,home_qb_name,pick,win_pct,pick_margin,market_spread,conf,disagrees_with_market,qb_note,game_id,neutral
 2026-10-22 08:15 PM,Patriots,Bears,Drake Maye,Caleb Williams,Patriots,51.6,0.5,-3.0,LOW,True,,2026_07_NE_CHI,False
-2026-10-25 09:30 AM,Steelers,Saints,Aaron Rodgers,Tyler Shough,Steelers,57.6,2.5,3.5,LOW,False,,2026_07_PIT_NO,True
-2026-10-25 01:00 PM,49ers,Falcons,Brock Purdy,Michael Penix Jr.,49ers,62.9,4.4,3.0,MED,False,,2026_07_SF_ATL,False
-2026-10-25 01:00 PM,Bengals,Ravens,Joe Burrow,Tyler Huntley,Bengals,54.1,1.4,1.5,LOW,False,,2026_07_CIN_BAL,False
+2026-10-25 09:30 AM,Steelers,Saints,Aaron Rodgers,Tyler Shough,Steelers,57.6,2.5,3.0,LOW,False,,2026_07_PIT_NO,True
+2026-10-25 01:00 PM,49ers,Falcons,Brock Purdy,Michael Penix Jr.,49ers,62.9,4.3,2.5,MED,False,,2026_07_SF_ATL,False
+2026-10-25 01:00 PM,Bengals,Ravens,Joe Burrow,Tyler Huntley,Bengals,54.1,1.4,-1.5,LOW,True,,2026_07_CIN_BAL,False
 2026-10-25 01:00 PM,Browns,Titans,Deshaun Watson,Cam Ward,Browns,58.5,2.8,1.5,MED,False,,2026_07_CLE_TEN,False
 2026-10-25 01:00 PM,Buccaneers,Panthers,Jalon Daniels,Bryce Young,Panthers,67.0,5.8,-3.0,MED,False,,2026_07_TB_CAR,False
 2026-10-25 01:00 PM,Colts,Vikings,Daniel Jones,Kyler Murray,Vikings,71.6,7.5,-6.5,HIGH,False,,2026_07_IND_MIN,False
-2026-10-25 01:00 PM,Dolphins,Jets,Malik Willis,Geno Smith,Jets,57.5,2.5,-4.5,LOW,False,,2026_07_MIA_NYJ,False
-2026-10-25 01:00 PM,Giants,Texans,J.J. McCarthy,C.J. Stroud,Texans,75.7,9.2,-10.5,HIGH,False,QB change,2026_07_NYG_HOU,False
+2026-10-25 01:00 PM,Dolphins,Jets,Malik Willis,Geno Smith,Jets,57.6,2.5,-4.5,LOW,False,,2026_07_MIA_NYJ,False
+2026-10-25 01:00 PM,Giants,Texans,J.J. McCarthy,C.J. Stroud,Texans,75.8,9.2,-10.5,HIGH,False,QB change,2026_07_NYG_HOU,False
 2026-10-25 04:05 PM,Broncos,Cardinals,Bo Nix,Jacoby Brissett,Broncos,63.5,4.6,4.5,MED,False,,2026_07_DEN_ARI,False
 2026-10-25 04:25 PM,Packers,Lions,Jordan Love,Jared Goff,Lions,63.5,4.5,-3.0,MED,False,,2026_07_GB_DET,False
-2026-10-25 04:25 PM,Rams,Raiders,Matthew Stafford,Kirk Cousins,Rams,58.0,2.6,4.5,LOW,False,,2026_07_LA_LV,False
-2026-10-25 08:20 PM,Chiefs,Seahawks,Patrick Mahomes,Drew Lock,Chiefs,50.8,0.3,-2.5,LOW,True,,2026_07_KC_SEA,False
-2026-10-26 08:15 PM,Cowboys,Eagles,Dak Prescott,Jalen Hurts,Eagles,58.3,2.7,4.5,MED,True,QB change,2026_07_DAL_PHI,False
+2026-10-25 04:25 PM,Rams,Raiders,Matthew Stafford,Kirk Cousins,Rams,57.9,2.6,3.5,LOW,False,,2026_07_LA_LV,False
+2026-10-25 08:20 PM,Chiefs,Seahawks,Patrick Mahomes,Sam Darnold,Seahawks,56.8,2.3,-3.0,LOW,False,QB change,2026_07_KC_SEA,False
+2026-10-26 08:15 PM,Cowboys,Eagles,Dak Prescott,Jalen Hurts,Eagles,58.3,2.8,4.5,MED,True,QB change,2026_07_DAL_PHI,False
