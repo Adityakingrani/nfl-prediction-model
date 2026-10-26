@@ -4,6 +4,8 @@ Saves to the `features` table in data/nfl.duckdb.
 
 Run from the repo root:  python src\\build_features.py
 """
+import os
+
 import duckdb
 import numpy as np
 import pandas as pd
@@ -36,6 +38,70 @@ def load(con):
     g["margin"] = g["home_score"] - g["away_score"]
     g["neutral"] = (g["location"] == "Neutral").astype(int)
     return g.sort_values(["season", "period", "kickoff"]).reset_index(drop=True), tg, qb
+
+
+# ---------------------------------------------------------------- QB availability
+UNAVAILABLE_ROSTER = {"RES", "INA", "SUS", "CUT", "RET"}
+UNAVAILABLE_INJURY = {"Out", "Doubtful"}
+OVERRIDE_FILE = "qb_overrides.csv"
+
+
+def fix_starters(con, g, qb):
+    """For upcoming games, replace listed starters who are injured/inactive, then apply manual overrides."""
+    tables = {r[0] for r in con.execute("SHOW TABLES").fetchall()}
+    upcoming = ~g["completed"]
+    if not upcoming.any():
+        return g
+    season = int(g.loc[upcoming, "season"].max())
+    names = qb.groupby("qb_id")["qb_name"].last()
+
+    # most recent starter for each team (QB with most dropbacks in its last game)
+    kick = g[["game_id", "kickoff"]]
+    last = (qb.merge(kick, on="game_id").sort_values(["kickoff", "dropbacks"])
+            .groupby("team").tail(1).set_index("team"))
+
+    bad = set()
+    if "qb_rosters" in tables:
+        r = con.execute(f"SELECT * FROM qb_rosters WHERE season = {season}").df()
+        latest = r[r["week"] == r["week"].max()]
+        bad |= set(latest.loc[latest["status"].isin(UNAVAILABLE_ROSTER), "gsis_id"])
+        full = dict(zip(r["gsis_id"], r["full_name"]))
+    else:
+        full = {}
+    if "qb_injuries" in tables:
+        i = con.execute(f"SELECT * FROM qb_injuries WHERE season = {season}").df()
+        latest = i[i["week"] == i["week"].max()]
+        bad |= set(latest.loc[latest["report_status"].isin(UNAVAILABLE_INJURY), "gsis_id"])
+
+    overrides = {}
+    if os.path.exists(OVERRIDE_FILE):
+        o = pd.read_csv(OVERRIDE_FILE).dropna()
+        by_name = {v.lower(): k for k, v in full.items()}
+        for _, row in o.iterrows():
+            qid = by_name.get(str(row["qb_name"]).strip().lower())
+            if qid is None:
+                print(f"  !! override: couldn't find QB '{row['qb_name']}' on this season's rosters, skipped")
+            else:
+                overrides[str(row["team"]).strip().upper()] = (qid, full[qid])
+
+    g = g.copy()
+    nxt = g.loc[upcoming & (g["kickoff"] >= pd.Timestamp.now() - pd.Timedelta(hours=6)), "week"].min()
+    say = lambda idx, msg: print(msg) if g.at[idx, "week"] == nxt else None
+    for side in ("home", "away"):
+        for idx in g.index[upcoming]:
+            team, qid = g.at[idx, f"{side}_team"], g.at[idx, f"{side}_qb_id"]
+            raw_team = {v: k for k, v in RELOCATED.items()}.get(team, team)
+            if team in overrides or raw_team in overrides:
+                new_id, new_name = overrides.get(team) or overrides.get(raw_team)
+                if new_id != qid:
+                    say(idx, f"  QB override: {team} {g.at[idx, f'{side}_qb_name']} -> {new_name}")
+                g.at[idx, f"{side}_qb_id"], g.at[idx, f"{side}_qb_name"] = new_id, new_name
+            elif qid in bad and team in last.index and last.at[team, "qb_id"] != qid:
+                new_id = last.at[team, "qb_id"]
+                new_name = full.get(new_id, names.get(new_id, new_id))
+                say(idx, f"  QB unavailable: {team} {g.at[idx, f'{side}_qb_name']} is injured/inactive -> using {new_name}")
+                g.at[idx, f"{side}_qb_id"], g.at[idx, f"{side}_qb_name"] = new_id, new_name
+    return g
 
 
 # ---------------------------------------------------------------- team ratings
@@ -219,6 +285,7 @@ def report(f):
 def main():
     con = duckdb.connect(DB_PATH)
     g, tg, qb = load(con)
+    g = fix_starters(con, g, qb)
     print("Building ratings (only past games each week)...")
     weekly, final = build_ratings(g, team_rows(g, tg))
     vals = qb_values(g, qb)

@@ -62,6 +62,18 @@ def pull_season_plays(season):
     return team, qb
 
 
+def pull_availability(season):
+    """Current-season roster status and injury report, used to catch injured/benched listed starters."""
+    r = nfl.load_rosters_weekly([season]).to_pandas()
+    r = r[r["position"] == "QB"][["season", "week", "team", "gsis_id", "full_name", "status"]]
+    try:
+        i = nfl.load_injuries([season]).to_pandas()
+        i = i[i["position"] == "QB"][["season", "week", "team", "gsis_id", "full_name", "report_status"]]
+    except Exception:
+        i = pd.DataFrame(columns=["season", "week", "team", "gsis_id", "full_name", "report_status"])
+    return r, i
+
+
 def save(con, name, df, season=None):
     con.register("tmp_df", df)
     if season is None or not con.execute(
@@ -94,6 +106,11 @@ def main():
         print(f"  play-by-play {s}: {len(t)} team-games, {len(q)} QB-games")
     save(con, "team_games", pd.concat(teams, ignore_index=True), args.season)
     save(con, "qb_games", pd.concat(qbs, ignore_index=True), args.season)
+
+    r, i = pull_availability(last)
+    save(con, "qb_rosters", r)
+    save(con, "qb_injuries", i)
+    print(f"  QB availability {last}: {len(r)} roster rows, {len(i)} injury rows")
 
     print("\n================ SUMMARY ================")
     print(con.execute("""
