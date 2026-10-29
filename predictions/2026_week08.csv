@@ -1,0 +1,15 @@
+kickoff,away,home,away_qb_name,home_qb_name,pick,win_pct,pick_margin,market_spread,conf,disagrees_with_market,qb_note,game_id,neutral
+2026-10-29 08:15 PM,Panthers,Packers,Bryce Young,Jordan Love,Packers,66.1,5.5,-3.5,MED,False,,2026_08_CAR_GB,False
+2026-11-01 01:00 PM,Browns,Steelers,Deshaun Watson,Aaron Rodgers,Steelers,64.2,4.8,-3.5,MED,False,,2026_08_CLE_PIT,False
+2026-11-01 01:00 PM,Cardinals,Cowboys,Jacoby Brissett,Dak Prescott,Cowboys,69.3,6.6,-7.0,MED,False,,2026_08_ARI_DAL,False
+2026-11-01 01:00 PM,Colts,Jaguars,Daniel Jones,Trevor Lawrence,Jaguars,77.5,10.0,-10.0,HIGH,False,,2026_08_IND_JAX,False
+2026-11-01 01:00 PM,Falcons,Buccaneers,Michael Penix Jr.,Baker Mayfield,Buccaneers,58.7,2.9,-2.5,MED,False,,2026_08_ATL_TB,False
+2026-11-01 01:00 PM,Raiders,Jets,Kirk Cousins,Geno Smith,Jets,54.0,1.3,-1.5,LOW,False,,2026_08_LV_NYJ,False
+2026-11-01 01:00 PM,Ravens,Bills,Tyler Huntley,Josh Allen,Bills,74.0,8.5,-3.0,HIGH,False,,2026_08_BAL_BUF,False
+2026-11-01 01:00 PM,Titans,Bengals,Cam Ward,Joe Burrow,Bengals,84.5,13.4,-11.5,HIGH,False,,2026_08_TEN_CIN,False
+2026-11-01 01:00 PM,Vikings,Lions,Kyler Murray,Jared Goff,Lions,58.0,2.7,-3.0,LOW,False,,2026_08_MIN_DET,False
+2026-11-01 04:05 PM,Chargers,Rams,Justin Herbert,Matthew Stafford,Rams,75.2,9.0,-6.5,HIGH,False,,2026_08_LAC_LA,False
+2026-11-01 04:25 PM,Chiefs,Broncos,Patrick Mahomes,Bo Nix,Broncos,50.3,0.1,1.5,LOW,True,,2026_08_KC_DEN,False
+2026-11-01 04:25 PM,Patriots,Dolphins,Drake Maye,Malik Willis,Patriots,71.4,7.5,7.0,HIGH,False,,2026_08_NE_MIA,False
+2026-11-01 08:20 PM,Eagles,Commanders,Tanner McKee,Jayden Daniels,Commanders,65.3,5.2,-6.0,MED,False,QB change,2026_08_PHI_WAS,False
+2026-11-02 08:15 PM,Bears,Seahawks,Caleb Williams,Sam Darnold,Seahawks,58.0,2.7,-3.0,MED,False,,2026_08_CHI_SEA,False
